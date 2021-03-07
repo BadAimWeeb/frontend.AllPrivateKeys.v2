@@ -1,12 +1,12 @@
 export default {
     defaultServers: [
 		{
-			location: "wss://s1-v2.allprivatekeys.org/apksocket",
+			location: "https://s1-v2.allprivatekeys.org/apksocket",
             name: "APKv2 Server 1",
             mode: "socket"
 		},
 		{
-			location: "wss://s2-v2.allprivatekeys.org/apksocket",
+			location: "https://s2-v2.allprivatekeys.org/apksocket",
             name: "APKv2 Server 2",
             mode: "socket"
 		},
