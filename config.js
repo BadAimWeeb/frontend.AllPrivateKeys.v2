@@ -1,13 +1,13 @@
 export default {
     defaultServers: [
         {
-            location: "https://s1-v2.allprivatekeys.org/apksocket",
-            name: "APKv2 Server 1",
+            location: "https://allprivatekeys-v2-1.herokuapp.com/apksocket",
+            name: "APKv2 Heroku Server 1",
             mode: "socket"
         },
         {
-            location: "https://s2-v2.allprivatekeys.org/apksocket",
-            name: "APKv2 Server 2",
+            location: "https://allprivatekeys-v2-2.herokuapp.com/apksocket",
+            name: "APKv2 Heroku Server 2",
             mode: "socket"
         },
         {
