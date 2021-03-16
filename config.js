@@ -6,8 +6,8 @@ export default {
             mode: "socket"
         },
         {
-            location: "https://allprivatekeys-v2-2.herokuapp.com/apksocket",
-            name: "APKv2 Heroku Server 2",
+            location: "https://allprivatekeys-v2-3.herokuapp.com/apksocket",
+            name: "APKv2 Heroku Server 3",
             mode: "socket"
         },
         {
