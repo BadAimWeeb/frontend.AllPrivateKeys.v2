@@ -30,21 +30,7 @@ window.onload = async () => {
 
     let hd = location.hash.slice(1).split('!').map(x => x.split('@')).flat();
 
-    let currentServer = {};
-    if (hd.length - 1) {
-        let loc = atob(hd[0]);
-        if (await configHandler.testServer(loc, hd[1])) {
-            currentServer = {
-                location: loc,
-                mode: hd[1],
-                defaultPos: config.defaultServers.findIndex(v => v.location === loc)
-            }
-        } else {
-            currentServer = await configHandler.getCurrentServer();
-        }
-    } else {
-        currentServer = await configHandler.getCurrentServer();
-    }
+    let currentServer = await configHandler.getCurrentServer();
     let server = await (new Communicator()).connect(currentServer.location, currentServer.mode);
 
     let currentPage = -1;
@@ -67,7 +53,7 @@ window.onload = async () => {
     }
 
     async function queryAndRenderInfo() {
-        window.location.hash = `${btoa(server.location)}@${server.method}!${currentCoin}@${currentPage}!${HItemPerPage.value}`;
+        window.location.hash = `@!${currentCoin}@${currentPage}!${HItemPerPage.value}`;
 
         HBrand.style.color = "transparent";
         let d = await server.getPageInfo(currentCoin, currentPage, HItemPerPage.value);

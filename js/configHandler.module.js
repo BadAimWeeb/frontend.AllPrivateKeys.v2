@@ -1,35 +1,32 @@
 import config from "../config.js";
 
 export async function getCurrentServer() {
-    let lsServerConfig = localStorage.getItem("APK_CurrentServer");
-    if (lsServerConfig) {
-        try {
-            let lssc = JSON.parse(lsServerConfig);
-            if (lssc && typeof lssc.location === "string" && typeof lssc.mode === "string") {
-                return {
-                    location: lssc.location,
-                    mode: lssc.mode,
-                    defaultPos: config.defaultServers.findIndex(v => v.location === lssc.location)
-                }
-            }
-        } catch {
-            return autoSelectServers();
-        }
-    } else {
-        return autoSelectServers();
-    }
+    return autoSelectServers();
 }
 
 export async function autoSelectServers() {
-    for (let serverLoc in config.defaultServers) {
-        let server = config.defaultServers[serverLoc];
+    let servers = config.defaultServers.filter(v => {
+        if (v.timeRestrict) {
+            let c = new Date();
+            if (v.timeRestrict.day && 
+                (v.timeRestrict.day[0] > c.getUTCDate() || v.timeRestrict.day[1] < c.getUTCDate())
+            ) return false;
+
+            return true;
+        } else return true;
+    }).sort((a, b) => {
+        let v = b.weight - a.weight;
+        if (v === 0) return Math.random() - 0.5;
+        return v;
+    });
+
+    for (let server of servers) {
         if (server.mode === "auto") {
             for (let mode of ["socket"]) {
                 if (await testServer(server.location, mode)) {
                     return {
                         location: server.location,
-                        mode: server.mode,
-                        defaultPos: +serverLoc
+                        mode: server.mode
                     }
                 }
             }
@@ -37,8 +34,7 @@ export async function autoSelectServers() {
             if (await testServer(server.location, server.mode)) {
                 return {
                     location: server.location,
-                    mode: server.mode,
-                    defaultPos: +serverLoc
+                    mode: server.mode
                 }
             }
         }
