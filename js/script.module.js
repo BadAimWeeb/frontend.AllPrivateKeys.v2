@@ -90,7 +90,7 @@ window.onload = async () => {
         HBrand.style.color = "white";
         HBrand.innerText = `AllPrivateKeys: ${supportedCoins.find(c => c.short === currentCoin)?.name}`;
 
-        window.location.hash = `${btoa(server.location)}@${server.method}!${currentCoin}@${currentPage}!${HItemPerPage.value}`;
+        window.location.hash = `@!${currentCoin}@${currentPage}!${HItemPerPage.value}`;
     }
 
     if (hd.length - 1) {
