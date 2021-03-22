@@ -201,3 +201,7 @@ body {
 .showEPP {
     display: block;
 }
+
+#currentPageNumber, #maxPageNumber {
+    word-break: break-all;
+}
