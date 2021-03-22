@@ -1,7 +1,6 @@
 import * as configHandler from "./configHandler.module.js";
 import Communicator from "./communicator.module.js";
 import Headroom from "./headroom.module.js";
-import config from "../config.js";
 
 window.onload = async () => {
     const HNavBar = document.getElementsByClassName("navbar")[0];
@@ -14,6 +13,9 @@ window.onload = async () => {
 
     let headroom = new Headroom(HNavBar);
     headroom.init();
+    setInterval(() => {
+        document.body.style.paddingTop = getComputedStyle(HNavBar).height;
+    });
 
     const HCoinList = document.getElementById("coinList");
     const HBrand = document.getElementById("brand");
