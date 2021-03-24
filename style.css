@@ -205,3 +205,17 @@ body {
 #currentPageNumber, #maxPageNumber {
     word-break: break-all;
 }
+
+#selectCoinList {
+    background-color: inherit;
+    border: none;
+    font: inherit;
+    height: 28px;
+    color: inherit;
+}
+
+#selectCoinList > option {
+    height: 28px;
+    padding: 0;
+    color: black;
+}

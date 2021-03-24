@@ -17,7 +17,7 @@ window.onload = async () => {
         document.body.style.paddingTop = getComputedStyle(HNavBar).height;
     });
 
-    const HCoinList = document.getElementById("coinList");
+    const HCoinList = document.getElementById("selectCoinList");
     const HBrand = document.getElementById("brand");
     const HItemPerPage = document.getElementById("itemCount");
     const HTable = document.getElementsByClassName("twlist")[0];
@@ -41,8 +41,8 @@ window.onload = async () => {
     // Get supported coins
     let supportedCoins = await server.querySupportedCoin();
     for (let coin of supportedCoins) {
-        let e = document.createElement("button");
-        e.onclick = () => changeCoin(coin.short);
+        let e = document.createElement("option");
+        e.value = coin.short;
         e.innerText = coin.name;
 
         HCoinList.appendChild(e);
@@ -51,11 +51,13 @@ window.onload = async () => {
     function changeCoin(shortName) {
         currentPage = "-1";
         currentCoin = shortName;
+        HCoinList.value = currentCoin;
         queryAndRenderInfo();
     }
 
     async function queryAndRenderInfo() {
         window.location.hash = `@!${currentCoin}@${currentPage}!${HItemPerPage.value}`;
+        HCoinList.value = currentCoin;
 
         HBrand.style.color = "transparent";
         let d = await server.getPageInfo(currentCoin, currentPage, HItemPerPage.value);
@@ -90,9 +92,9 @@ window.onload = async () => {
         );
 
         HBrand.style.color = "white";
-        HBrand.innerText = `AllPrivateKeys: ${supportedCoins.find(c => c.short === currentCoin)?.name}`;
 
         window.location.hash = `@!${currentCoin}@${currentPage}!${HItemPerPage.value}`;
+        HCoinList.value = currentCoin;
     }
 
     if (hd.length - 1) {
@@ -145,5 +147,12 @@ window.onload = async () => {
         if (e.key === "Enter") {
             document.activeElement.blur();
         }
-    })
+    });
+
+    HCoinList.addEventListener("change", e => {
+        if (e.isTrusted) {
+            clearTimeout(window.timeoutChangeCoin);
+            window.timeoutChangeCoin = setTimeout(() => changeCoin(e.target.value), 500);
+        }
+    });
 }
