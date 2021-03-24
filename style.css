@@ -208,7 +208,7 @@ body {
 
 #selectCoinList {
     background-color: inherit;
-    border: none;
+    border: 1px dashed black;
     font: inherit;
     height: 28px;
     color: inherit;
