@@ -64,4 +64,13 @@ export default class Communicator {
                 throw new Error("Unknown mode supplied.");
         }
     }
+
+    async getIter() {
+        switch (this.connectionData.mode) {
+            case "socket":
+                return this.connectionData.socketClient.asend("service_version");
+            default:
+                throw new Error("Unknown mode supplied.");
+        }
+    }
 }

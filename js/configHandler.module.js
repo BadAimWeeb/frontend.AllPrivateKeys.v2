@@ -26,7 +26,8 @@ export async function autoSelectServers() {
                 if (await testServer(server.location, mode)) {
                     return {
                         location: server.location,
-                        mode: server.mode
+                        mode: server.mode,
+                        serviceName: server.name
                     }
                 }
             }
@@ -34,7 +35,8 @@ export async function autoSelectServers() {
             if (await testServer(server.location, server.mode)) {
                 return {
                     location: server.location,
-                    mode: server.mode
+                    mode: server.mode,
+                    serviceName: server.name
                 }
             }
         }
@@ -43,7 +45,7 @@ export async function autoSelectServers() {
     return {
         location: "http://localhost:3000/apksocket",
         mode: "auto",
-        defaultPos: -1
+        serviceName: "Local"
     }
 }
 

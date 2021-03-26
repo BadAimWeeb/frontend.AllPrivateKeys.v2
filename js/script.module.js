@@ -28,12 +28,16 @@ window.onload = async () => {
     const HPrevButton = document.getElementById("prevPage");
     const HNextButton = document.getElementById("nextPage");
     const HIPageNumber = document.getElementById("pn");
+    const HInfo = document.getElementsByClassName("info")[0];
     HCoinList.innerHTML = ""
 
     let hd = location.hash.slice(1).split('!').map(x => x.split('@')).flat();
 
     let currentServer = await configHandler.getCurrentServer();
     let server = await (new Communicator()).connect(currentServer.location, currentServer.mode);
+
+    let iter = await server.getIter();
+    HInfo.innerHTML = `Service: ${currentServer.serviceName} (i${iter.iter}${iter.patch ? `.${iter.patch}` : ""})`;
 
     let currentPage = -1;
     let currentCoin = "";
